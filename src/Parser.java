@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -41,12 +42,10 @@ public class Parser {
         for (int y = 0; y < gameBoard.length; y++) {
             for (int x = 0; x < gameBoard[y].length; x++) {
                 if (gameBoard[y][x] == element) {
-                    System.out.println("Found the position of " + element);
-                    return new int[]{x, y};
+                    return new int[]{y, x}; // Adjusted to return {y, x} instead of {x, y}
                 }
             }
         }
-        System.out.println("Element " + element + " not found in the map.");
         return null;
     }
 }

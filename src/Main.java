@@ -1,3 +1,4 @@
+
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
@@ -28,13 +29,13 @@ public class Main {
             // Create AStar instance
             AStar aStar = new AStar(gameBoard, startPos, finishPos);
 
-            // Find the shortest path
-            List<String> shortestPath = aStar.findShortestPath();
+            // Find the complete path
+            List<int[]> completePath = aStar.findShortestPath();
 
-            if (shortestPath != null) {
-                System.out.println("Shortest Path Found:");
-                for (String move : shortestPath) {
-                    System.out.println(move);
+            if (completePath != null) {
+                System.out.println("Complete Path Found:");
+                for (int[] position : completePath) {
+                    System.out.println("(" + position[0] + ", " + position[1] + ")");
                 }
             } else {
                 System.out.println("No path found.");

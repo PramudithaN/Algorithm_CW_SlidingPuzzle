@@ -17,7 +17,7 @@ public class AStar {
     }
 
     // Method to find the shortest path using A* algorithm
-    public List<String> findShortestPath() {
+    public List<int[]> findShortestPath() {
         PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingInt(node -> node.fScore));
         Set<Node> closedSet = new HashSet<>();
         Map<Node, Node> cameFrom = new HashMap<>();
@@ -87,21 +87,12 @@ public class AStar {
         return row >= 0 && row < numRows && col >= 0 && col < numCols && gameBoard[row][col] != '0';
     }
 
-    // Method to reconstruct the path
-    private List<String> reconstructPath(Map<Node, Node> cameFrom, Node current) {
-        List<String> path = new ArrayList<>();
+    // Method to reconstruct the complete path
+    private List<int[]> reconstructPath(Map<Node, Node> cameFrom, Node current) {
+        List<int[]> path = new ArrayList<>();
         while (cameFrom.containsKey(current)) {
-            Node prev = cameFrom.get(current);
-            if (prev.row < current.row) {
-                path.add("down");
-            } else if (prev.row > current.row) {
-                path.add("up");
-            } else if (prev.col < current.col) {
-                path.add("right");
-            } else {
-                path.add("left");
-            }
-            current = prev;
+            path.add(new int[]{current.row, current.col});
+            current = cameFrom.get(current);
         }
         Collections.reverse(path);
         return path;
