@@ -1,4 +1,3 @@
-
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
@@ -30,7 +29,8 @@ public class Main {
             AStar aStar = new AStar(gameBoard, startPos, finishPos);
 
             // Find the complete path
-            List<int[]> completePath = aStar.findShortestPath();
+            List<int[]> completePath = aStar.findCompletePath();
+
 
             if (completePath != null) {
                 System.out.println("Complete Path Found:");
