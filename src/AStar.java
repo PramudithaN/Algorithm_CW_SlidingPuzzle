@@ -19,7 +19,6 @@ public class AStar {
     }
 
     // Method to find the complete path using A* algorithm
-    // Method to find the complete path using A* algorithm
     public List<int[]> findCompletePath() {
         Queue<Node> openSet = new LinkedList<>();
         Map<Node, Node> cameFrom = new HashMap<>();
@@ -68,7 +67,6 @@ public class AStar {
 
         return null; // No complete path found
     }
-
 
     // Heuristic function (Manhattan distance)
     private int heuristic(int row, int col) {

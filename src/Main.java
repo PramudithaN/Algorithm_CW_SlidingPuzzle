@@ -67,9 +67,6 @@ public class Main {
         System.out.println("Done!");
     }
 
-
-
-
     private static String getDirection(int[] from, int[] to) {
         int dx = to[0] - from[0];
         int dy = to[1] - from[1];
