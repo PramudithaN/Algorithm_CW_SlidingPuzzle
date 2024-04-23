@@ -1,5 +1,14 @@
 import java.util.*;
 
+/** *****************************************************************************
+ *  Name:    Pramuditha Nadun
+ *  UOW ID:  W1902262
+ *  IIT ID:  20212171
+ *
+ *  Description:  A* algorithm Implementation- Find the shortest path
+ *
+ **************************************************************************** */
+
 public class AStarPathfinder {
     private char[][] puzzle;
     private int[] startPos;
@@ -18,7 +27,7 @@ public class AStarPathfinder {
         this.visited = new HashSet<>();
     }
 
-    // Method to find the complete path using A* algorithm
+    // Method to find the path using A* algorithm
     public List<int[]> findShortestPath() {
         Queue<Node> openSet = new LinkedList<>();
         Map<Node, Node> cameFrom = new HashMap<>();
@@ -34,7 +43,7 @@ public class AStarPathfinder {
             visited.add(current);
 
             if (current.row == finishPos[0] && current.col == finishPos[1]) {
-                return reconstructCompletePath(cameFrom, current);
+                return reconstructCompletedPath(cameFrom, current);
             }
 
             // Explore neighbors
@@ -42,7 +51,7 @@ public class AStarPathfinder {
                 int newRow = current.row;
                 int newCol = current.col;
 
-                // Move in the specified direction until hitting an obstacle or the edge of the board
+                // Move in the specified direction until hitting an obstacle or the edge of the puzzle
                 while (isValid(newRow + dir[0], newCol + dir[1])) {
                     newRow += dir[0];
                     newCol += dir[1];
@@ -50,7 +59,7 @@ public class AStarPathfinder {
                     // Check if the new position is the finish position
                     if (newRow == finishPos[0] && newCol == finishPos[1]) {
                         cameFrom.put(new Node(newRow, newCol, 0), current);
-                        return reconstructCompletePath(cameFrom, new Node(newRow, newCol, 0));
+                        return reconstructCompletedPath(cameFrom, new Node(newRow, newCol, 0));
                     }
                 }
 
@@ -65,7 +74,7 @@ public class AStarPathfinder {
             }
         }
 
-        return null; // No complete path found
+        return null;
     }
 
     // Heuristic function (Manhattan distance)
@@ -78,8 +87,8 @@ public class AStarPathfinder {
         return row >= 0 && row < numRows && col >= 0 && col < numCols && puzzle[row][col] != '0';
     }
 
-    // Method to reconstruct the complete path
-    private List<int[]> reconstructCompletePath(Map<Node, Node> cameFrom, Node current) {
+    // Method to reconstruct the traveled path
+    private List<int[]> reconstructCompletedPath(Map<Node, Node> cameFrom, Node current) {
         List<int[]> path = new ArrayList<>();
         while (cameFrom.containsKey(current)) {
             path.add(new int[]{current.row, current.col});

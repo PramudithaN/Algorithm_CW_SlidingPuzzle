@@ -1,6 +1,15 @@
 import java.util.Objects;
 
-public class Node { // Node class to represent positions on the puzzle
+/** *****************************************************************************
+ *  Name:    Pramuditha Nadun
+ *  UOW ID:  W1902262
+ *  IIT ID:  20212171
+ *
+ *  Description:  Node Implementation- Position of a single node is represented in the puzzle
+ *
+ **************************************************************************** */
+
+public class Node {
         int row;
         int col;
         int hScore;
@@ -11,7 +20,7 @@ public class Node { // Node class to represent positions on the puzzle
             this.hScore = hScore;
         }
 
-        // Overriding equals and hashCode methods to properly use Node objects in HashSet and HashMap
+        // Map the position of a node in the puzzle
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
