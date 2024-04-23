@@ -19,11 +19,14 @@ public class AStar {
     }
 
     // Method to find the complete path using A* algorithm
+    // Method to find the complete path using A* algorithm
     public List<int[]> findCompletePath() {
         Queue<Node> openSet = new LinkedList<>();
         Map<Node, Node> cameFrom = new HashMap<>();
+        Map<Node, Integer> gScore = new HashMap<>();
 
         Node startNode = new Node(startPos[0], startPos[1], heuristic(startPos[0], startPos[1]));
+        gScore.put(startNode, 0);
 
         openSet.add(startNode);
 
@@ -35,12 +38,29 @@ public class AStar {
                 return reconstructCompletePath(cameFrom, current);
             }
 
-            Node prevNode = cameFrom.get(current); // Get the previous node
+            // Explore neighbors
+            for (int[] dir : new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
+                int newRow = current.row;
+                int newCol = current.col;
 
-            List<Node> neighbors = getValidNeighbors(current, prevNode);
-            for (Node neighbor : neighbors) {
-                if (!visited.contains(neighbor)) {
+                // Move in the specified direction until hitting an obstacle or the edge of the board
+                while (isValid(newRow + dir[0], newCol + dir[1])) {
+                    newRow += dir[0];
+                    newCol += dir[1];
+
+                    // Check if the new position is the finish position
+                    if (newRow == finishPos[0] && newCol == finishPos[1]) {
+                        cameFrom.put(new Node(newRow, newCol, 0), current);
+                        return reconstructCompletePath(cameFrom, new Node(newRow, newCol, 0));
+                    }
+                }
+
+                Node neighbor = new Node(newRow, newCol, heuristic(newRow, newCol));
+                int tentativeGScore = gScore.getOrDefault(current, Integer.MAX_VALUE) + 1;
+
+                if (tentativeGScore < gScore.getOrDefault(neighbor, Integer.MAX_VALUE)) {
                     cameFrom.put(neighbor, current);
+                    gScore.put(neighbor, tentativeGScore);
                     openSet.add(neighbor);
                 }
             }
@@ -49,42 +69,11 @@ public class AStar {
         return null; // No complete path found
     }
 
+
     // Heuristic function (Manhattan distance)
     private int heuristic(int row, int col) {
         return Math.abs(row - finishPos[0]) + Math.abs(col - finishPos[1]);
     }
-
-    // Method to get valid neighboring nodes
-    // Method to get valid neighboring nodes
-    // Method to get valid neighboring nodes
-    private List<Node> getValidNeighbors(Node node, Node prevNode) {
-        List<Node> neighbors = new ArrayList<>();
-        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // Up, Down, Left, Right
-
-        for (int[] dir : directions) {
-            int newRow = node.row;
-            int newCol = node.col;
-
-            // Skip checking the direction opposite to the one they came from initially
-            if (prevNode != null && newRow - prevNode.row == dir[0] && newCol - prevNode.col == dir[1]) {
-                continue;
-            }
-
-            // Simulate sliding until encountering a wall or a rock
-            while (isValid(newRow + dir[0], newCol + dir[1])) {
-                newRow += dir[0];
-                newCol += dir[1];
-            }
-
-            neighbors.add(new Node(newRow, newCol, heuristic(newRow, newCol)));
-        }
-
-        return neighbors;
-    }
-
-
-
-
 
     // Method to check if a position is valid on the game board
     private boolean isValid(int row, int col) {
