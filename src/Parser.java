@@ -41,8 +41,8 @@ public class Parser {
     public int[] findSpecificElement(char[][] gameBoard, char element) {
         for (int y = 0; y < gameBoard.length; y++) {
             for (int x = 0; x < gameBoard[y].length; x++) {
-                if (gameBoard[y][x] == element) {
-                    return new int[]{y, x}; // Adjusted to return {y, x} instead of {x, y}
+                if (gameBoard[y][x] == element) { // Index out of bounds Error handling
+                    return new int[]{y, x}; // Corrected to return {y, x} instead of {x, y}
                 }
             }
         }
