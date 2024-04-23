@@ -8,33 +8,33 @@ public class Main {
     public static void main(String[] args) {
         try {
             Scanner input = new Scanner(System.in);
-            System.out.println("Enter the file path without the extension (e.g., src/FolderName/fileName): ");
+            System.out.println("Enter the file path : ");
             String fileName = input.nextLine();
 
             // Parse the game board from the input file
             Parser parser = new Parser();
-            char[][] gameBoard = parser.parseMapFromFile(fileName);
+            char[][] puzzle = parser.parseMapFromFile(fileName);
 
             // Display the parsed map
             System.out.println("********* THE MAP **************");
-            parser.displayMap(gameBoard);
+            parser.displayMap(puzzle);
 
             // Find the start and end points
-            int[] startPos = parser.findSpecificElement(gameBoard, 'S');
-            int[] finishPos = parser.findSpecificElement(gameBoard, 'F');
+            int[] startPos = parser.findNodes(puzzle, 'S');
+            int[] finishPos = parser.findNodes(puzzle, 'F');
             System.out.println("Start Position: " + (startPos[1] + 1) + ", " + (startPos[0] + 1));
             System.out.println("Finish Position: " + (finishPos[1] + 1) + ", " + (finishPos[0] + 1));
             System.out.println("********************************");
 
             // Create AStar instance
-            AStar aStar = new AStar(gameBoard, startPos, finishPos);
+            AStarPathfinder aStar = new AStarPathfinder(puzzle, startPos, finishPos);
 
             // Find the complete path
-            List<int[]> completePath = aStar.findCompletePath();
+            List<int[]> shortestPath = aStar.findShortestPath();
 
-            if (completePath != null) {
-                System.out.println("Complete Path Found:");
-                printPathWithDirections(completePath, startPos);
+            if (shortestPath != null) {
+                System.out.println("Shortest Path Found:");
+                printPathWithDirections(shortestPath, startPos);
             } else {
                 System.out.println("No path found.");
             }

@@ -1,7 +1,7 @@
 import java.util.*;
 
-public class AStar {
-    private char[][] gameBoard;
+public class AStarPathfinder {
+    private char[][] puzzle;
     private int[] startPos;
     private int[] finishPos;
     private int numRows;
@@ -9,17 +9,17 @@ public class AStar {
     private Set<Node> visited;
 
     // Constructor
-    public AStar(char[][] gameBoard, int[] startPos, int[] finishPos) {
-        this.gameBoard = gameBoard;
+    public AStarPathfinder(char[][] puzzle, int[] startPos, int[] finishPos) {
+        this.puzzle = puzzle;
         this.startPos = startPos;
         this.finishPos = finishPos;
-        this.numRows = gameBoard.length;
-        this.numCols = gameBoard[0].length;
+        this.numRows = puzzle.length;
+        this.numCols = puzzle[0].length;
         this.visited = new HashSet<>();
     }
 
     // Method to find the complete path using A* algorithm
-    public List<int[]> findCompletePath() {
+    public List<int[]> findShortestPath() {
         Queue<Node> openSet = new LinkedList<>();
         Map<Node, Node> cameFrom = new HashMap<>();
         Map<Node, Integer> gScore = new HashMap<>();
@@ -73,9 +73,9 @@ public class AStar {
         return Math.abs(row - finishPos[0]) + Math.abs(col - finishPos[1]);
     }
 
-    // Method to check if a position is valid on the game board
+    // Method to check if a position is valid on the puzzle
     private boolean isValid(int row, int col) {
-        return row >= 0 && row < numRows && col >= 0 && col < numCols && gameBoard[row][col] != '0';
+        return row >= 0 && row < numRows && col >= 0 && col < numCols && puzzle[row][col] != '0';
     }
 
     // Method to reconstruct the complete path
@@ -89,30 +89,4 @@ public class AStar {
         return path;
     }
 
-    // Node class to represent positions on the game board
-    private static class Node {
-        int row;
-        int col;
-        int hScore;
-
-        Node(int row, int col, int hScore) {
-            this.row = row;
-            this.col = col;
-            this.hScore = hScore;
-        }
-
-        // Overriding equals and hashCode methods to properly use Node objects in HashSet and HashMap
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Node node = (Node) o;
-            return row == node.row && col == node.col;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(row, col);
-        }
-    }
 }

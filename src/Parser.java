@@ -16,21 +16,21 @@ public class Parser {
             numCols = scanner.nextLine().trim().length();
         }
 
-        char[][] gameBoard = new char[numRows][numCols];
+        char[][] puzzle = new char[numRows][numCols];
         scanner = new Scanner(file); // reset scanner to beginning of file
 
         for (int i = 0; i < numRows; i++) {
             String line = scanner.nextLine().trim();
             for (int j = 0; j < numCols; j++) {
-                gameBoard[i][j] = line.charAt(j);
+                puzzle[i][j] = line.charAt(j);
             }
         }
 
-        return gameBoard;
+        return puzzle;
     }
 
-    public void displayMap(char[][] gameBoard) {
-        for (char[] row : gameBoard) {
+    public void displayMap(char[][] puzzle) {
+        for (char[] row : puzzle) {
             for (char cell : row) {
                 System.out.print(cell + " ");
             }
@@ -38,10 +38,10 @@ public class Parser {
         }
     }
 
-    public int[] findSpecificElement(char[][] gameBoard, char element) {
-        for (int y = 0; y < gameBoard.length; y++) {
-            for (int x = 0; x < gameBoard[y].length; x++) {
-                if (gameBoard[y][x] == element) { // Index out of bounds Error handling
+    public int[] findNodes(char[][] puzzle, char element) {
+        for (int y = 0; y < puzzle.length; y++) {
+            for (int x = 0; x < puzzle[y].length; x++) {
+                if (puzzle[y][x] == element) { // Index out of bounds Error handling
                     return new int[]{y, x}; // Corrected to return {y, x} instead of {x, y}
                 }
             }
